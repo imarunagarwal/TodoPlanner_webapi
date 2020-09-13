@@ -3,7 +3,6 @@ var api = require('./api/api');
 var app = express();
 var config = require('./config/config');
 var logger = require('./util/logger');
-var path = require('path');
 
 // connection with the db
 require('mongoose')
@@ -17,18 +16,6 @@ require('mongoose')
 
 //all the middle wares goes here.
 require('./middleware/appMiddleware')(app);
-
-let str = __dirname;
-str = str.substring(0, str.length - 7);
-
-// Serve only the static files form the dist directory
-app.use('/api', api);
-
-app.use(express.static(str + '/dist/UserManagement'));
-
-app.get('/*', function (req, res) {
-    res.sendFile(path.join(str + '/dist/UserManagement/index.html'));
-});
 
 app.use('/api', api);
 
